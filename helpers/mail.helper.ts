@@ -16,8 +16,8 @@ class mailHelper {
             host: 'smtp.ethereal.email',
             port: 587,
             auth: {
-                user: 'lela44@ethereal.email',
-                pass: 'w1eSXC3YZshmyHSY1Q'
+                user: 'makenna35@ethereal.email',
+                pass: 'EDZ5zsUagU5ArQmQgT'
             }
         });
     }

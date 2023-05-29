@@ -1,7 +1,10 @@
 import express from "express";
 import authController from "./auth.controller";
+import tokenValidator from "../../middleware/token.validator";
+// import userRouter from "../users/user.router";
 
 const authRouter = express.Router();
+//const userRouter = express.Router()
 
 authRouter.get("/resource", authController.resourceFile);
 authRouter.post("/login", authController.login);
