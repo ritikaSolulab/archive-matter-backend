@@ -189,13 +189,8 @@ class authController {
         return response.helper(res, false, messages.en.ERROR.USER_OTP_WRONG, {}, constants.RESPONSE_STATUS.BAD_REQUEST);
       }
       delete userData.loginOtp;
-      //let token;
-      //try {
         let token = tokenValidator.generateToken(JSON.stringify(userData))
         console.log(token)
-      // }catch(err){
-      //   console.log(err)
-      // }
       await User.updateOne({email:email}, {$set:{isEmailVerified:true}})
       const updatedData = {
         email,
