@@ -1,0 +1,7 @@
+logs
+package-lock.json
+node_modules
+dist
+public/images/
+public/videos/
+.env
