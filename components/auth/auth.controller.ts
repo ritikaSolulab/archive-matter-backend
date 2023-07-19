@@ -189,10 +189,13 @@ class authController {
         return response.helper(res, false, messages.en.ERROR.USER_OTP_WRONG, {}, constants.RESPONSE_STATUS.BAD_REQUEST);
       }
       delete userData.loginOtp;
-      
+      //let token;
+      //try {
         let token = tokenValidator.generateToken(JSON.stringify(userData))
         console.log(token)
-      
+      // }catch(err){
+      //   console.log(err)
+      // }
       await User.updateOne({email:email}, {$set:{isEmailVerified:true}})
       const updatedData = {
         email,
@@ -219,45 +222,6 @@ class authController {
   }
 
 
-  resendVerifyCode = async(req:Request, res:Response) => {
-    info('Inside resend verify code')
-    try{
-      const {email,otp} = req.body
-      const userData = await this.userService.getSingleData({ email }, [], 'email _id loginOtp tokens', User);
-
-      if (!userData) {
-        return response.helper(res, false, messages.en.ERROR.USER_NOT_FOUND, {}, constants.RESPONSE_STATUS.BAD_REQUEST);
-      }
-      if (userData.loginOtp !== Number(otp)) {
-        return response.helper(res, false, messages.en.ERROR.USER_OTP_WRONG, {}, constants.RESPONSE_STATUS.BAD_REQUEST);
-      }
-      delete userData.loginOtp;
-      
-        let token = tokenValidator.generateToken(JSON.stringify(userData))
-        console.log(token)
-      // await User.updateOne({email:email}, {$set:{isEmailVerified:true}})
-      const updatedData = {
-        email,
-        loginOtp: null,
-        tokens: {
-          $addToSet: {
-            createdAt: new Date(),
-            token,
-          }
-        }
-      }
-      await this.userService.updateDataFactory({ email }, updatedData, [], 'email _id loginOtp tokens', User)
-      return response.helper(res, true, messages.en.SUCCESS.USER_VERIFY_OTP, {}, constants.RESPONSE_STATUS.SUCCESS);
-    } catch (err) {
-      err
-      response.helper(
-        res,
-        false,
-        "SOMETHING_WENT_WRONG",
-        {},
-        constants.RESPONSE_STATUS.SERVER_ERROR
-      );
-    }
-  }
+  
 }
 export default new authController();
