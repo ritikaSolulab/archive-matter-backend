@@ -1,0 +1,588 @@
+//  barChartData = async (req: Request, res: Response) => {
+//     const { search } = req.query;
+//     const query = [];
+
+//     // Add $match stage to filter by nftType
+//     query.push({ $match: { nftType: search } });
+
+//     query.push(
+//       {
+//         $group: {
+//           _id: {
+//             $dateToString: {
+//               format: "%Y-%m-%d",
+//               date: "$createdAt",
+//             },
+//           },
+//           total: {
+//             $sum: 1,
+//           },
+//         },
+//       }
+//       // {
+//       //   $project: {
+//       //     x: "$_id",
+//       //     y: "$total",
+//       //     _id: 0,
+//       //   },
+//       // }
+//     );
+
+//     const data = await this.rootNftService.aggregationQuery(query);
+
+//     //Transform data into bar chart
+//     const chartData = data.map((item) => ({
+//       x: item._id,
+//       y: item.total,
+//     }));
+
+//     return response.helper(
+//       res,
+//       true,
+//       "NFT_DATA",
+//       chartData,
+//       constants.RESPONSE_STATUS.SUCCESS
+//     );
+//   };
+
+//   nftCount = async (req: Request, res: Response) => {
+//     const { createdAt, updatedAt } = req.body;
+
+//     // Validate and parse the start and end dates using Moment.js
+//     const startDate = moment(createdAt, "YYYY-MM-DD");
+//     const endDate = moment(updatedAt, "YYYY-MM-DD");
+
+//     // Check if the start and end dates are valid
+//     if (!startDate.isValid() || !endDate.isValid()) {
+//       return response.helper(res,false,"INVALID_DATE",{}, constants.RESPONSE_STATUS.BAD_REQUEST);
+//     }
+//     // Count the number of NFTs within the specified date range
+//     const count = await rootNftModel.countDocuments({
+//       releaseDate: { $gte: startDate.toDate(), $lte: endDate.toDate() },
+//     });
+
+  
+//     res.json({ count });
+//   };
+
+
+//   router.get('/get.barChart', Permission('nft_management', 'view'), uthilHelper.Wrap(Controller.barChartData))
+// router.get('/get.nftCount', Permission('nft_management', 'view'), uthilHelper.Wrap(Controller.nftCount))
+
+// lineChartData = async (req: Request, res: Response) => {
+//     const { search } = req.query;
+//     const query = [];
+
+//     // Add $match stage to filter by userType equal to "creator"
+//     if (search) {
+//       query.push({ $match: { userType: search } });
+//     }
+//     query.push(
+//       {
+//         $group: {
+//           _id: {
+//             $dateToString: {
+//               format: "%Y-%m-%d",
+//               date: "$createdAt",
+//             },
+//           },
+//           total: {
+//             $sum: 1,
+//           },
+//         },
+//       },
+//       {
+//         $project: {
+//           x: "$_id",
+//           y: "$total",
+//           _id: 0,
+//         },
+//       }
+//     );
+//     const data = await this.userService.aggregationQuery(query);
+//     return response.helper(
+//       res,
+//       true,
+//       "USERS_DATA",
+//       data,
+//       constants.RESPONSE_STATUS.SUCCESS
+//     );
+//   };
+
+  // router.get('/user.lineChart', Permission('user_management', 'view'), uthilHelper.Wrap(Controller.lineChartData));
+
+
+  // var options = {
+    //     chart: {
+    //         height: 350,
+    //         type: 'bar',
+    //     },
+    //     dataLabels: {
+    //         enabled: false
+    //     },
+    //     series: [],
+    //     title: {
+    //         text: 'Ajax Example',
+    //     },
+    //     noData: {
+    //       text: 'Loading...'
+    //     }
+    //   }
+      
+    //   var chart = new ApexCharts(
+    //     document.querySelector("#chart"),
+    //     options
+    //   );
+      
+    //   chart.render();
+    
+    //   title: {
+    //     text: title,
+    //     align: 'left',
+    //     margin: 10,
+    //     offsetX: 0,
+    //     offsetY: 0,
+    //     floating: false,
+    //     style: {
+    //         fontSize: '18px',
+    //         fontWeight: 'bold',
+    //         fontFamily: undefined,
+    //         color: '#263238'
+    //     },
+    // },
+    // chart: {
+    //     type,
+    //     height: 345,
+    //     offsetX: -15,
+    //     toolbar: { show: true },
+    //     foreColor: "#adb0bb",
+    //     fontFamily: 'inherit',
+    //     sparkline: { enabled: false },
+    // },
+    // dataLabels: {
+    //     enabled: true
+    // },
+    
+    // series: [],
+    // noData: {
+    //     text: 'Loading...'
+    // }
+
+  //   const loadChart = async(chartId, url, type, title) => {
+  //     const options = {
+  //         chart: {
+  //             height: 350,
+  //             type: 'bar',
+  //         },
+  //         dataLabels: {
+  //             enabled: false
+  //         },
+  //         series: [],
+  //         // title: {
+  //         //     text: 'NFT Created',
+  //         // },
+  //         noData: {
+  //           text: 'Loading...'
+  //         }
+  //     }
+  //     let chart = new ApexCharts(document.querySelector(`#${chartId}`), options);
+  
+  //     chart.render();
+  //     await axios(axiosConfig(url, 'GET'))
+  //     .then((resp) => {
+  //         console.log(resp.data)
+  //         chart.updateSeries([{
+  //             name: title,
+  //             data: resp.data.data
+  //         }])
+  //     })
+  //     .catch( err => ToastMsg(err?.response?.data?.message, 'Error'))
+  // }
+
+//   SERVER_URL: 'http://localhost:3000/',
+// <script>loadChart(
+//   "breakup",`${config.SERVER_URL}collection/get.barChart`,"area","NFT's Created"
+// )</script>
+
+// barChartData = async (req: Request, res: Response) => {
+  //   const { search } = req.query;
+  //   //const query = [];
+
+  //   // Add $match stage to filter by nftType
+  //   const match = this.rootnftService.aggregationMatch({ nftType: search });
+  //   const group = this.rootnftService.
+  //   groupService({ _id: {$dateToString: {format: "%Y-%m-%d",date: "$createdAt",total: {$sum: 1}}},{ $project: { totalRevenue: 1 } }})
+  //   // query.push({
+  //   //   $group: {
+  //   //     _id: {
+  //   //       $dateToString: {
+  //   //         format: "%Y-%m-%d",
+  //   //         date: "$createdAt",
+  //   //       },
+  //   //     },
+  //   //     total: {
+  //   //       $sum: 1,
+  //   //     },
+  //   //   },
+  //   // });
+
+  //   //const data = await this.rootnftService.aggregationQuery(query);
+
+  //   //Transform data into bar chart
+  //   const chartData = data.map((item) => ({
+  //     x: item._id,
+  //     y: item.total,
+  //   }));
+
+  //   // return response.helper(
+  //   //   res,
+  //   //   true,
+  //   //   "NFT_DATA",
+  //   //   chartData,
+  //   //   constants.RESPONSE_STATUS.SUCCESS
+  //   // );
+  // };
+
+  
+  // lineChartData = async (req: Request, res: Response) => {
+  //   const { search } = req.query;
+  //   const query = [];
+
+  //   // Add $match stage to filter by userType equal to "creator"
+  //   if (search) {
+  //     query.push({ $match: { userType: search } });
+  //   }
+  //   query.push(
+  //     {
+  //       $group: {
+  //         _id: {
+  //           $dateToString: {
+  //             format: "%Y-%m-%d",
+  //             date: "$createdAt",
+  //           },
+  //         },
+  //         total: {
+  //           $sum: 1,
+  //         },
+  //       },
+  //     },
+  //     {
+  //       $project: {
+  //         x: "$_id",
+  //         y: "$total",
+  //         _id: 0,
+  //       },
+  //     }
+  //   );
+  //   const data = await this.userService.aggregationQuery(query);
+  //   return response.helper(
+  //     res,
+  //     true,
+  //     "USERS_DATA",
+  //     data,
+  //     constants.RESPONSE_STATUS.SUCCESS
+  //   );
+  // };
+
+  // nftCount = async (req: Request, res: Response) => {
+  //   info("Inside nft count");
+  //   const lookup = this.nftService.lookupService(
+  //     "root_nfts",
+  //     "nftRootId",
+  //     "_id",
+  //     [{ $project: { _id: 1, totalNFTs: 1 } }],
+  //     "totalNFTs"
+  //   );
+  //   const lookup2 = this.nftService.lookupService(
+  //     "root_nfts",
+  //     "nftRootId",
+  //     "_id",
+  //     [
+  //       {
+  //         $match: {
+  //           nftType: "sold",
+  //         },
+  //       },
+  //       { $project: { _id: 1, totalNFTs: 1 } }
+  //     ],
+  //     "NFTOnSale"
+  //   );
+
+  //   const group = this.nftService.groupService({ _id: "_id", totalRevenue: { $sum: "$priceInUsd" } });
+
+  //   const face1 = this.nftService.aggregationDatatable(group);
+  //   const face2 = this.nftService.aggregationDatatable(lookup2);
+  //   const face3 = this.nftService.aggregationDatatable(lookup);
+
+  //   const extraQuery: Array<any> = [];
+  //   extraQuery.push(face1, face2, face3);
+
+  //   const data = await DatatableQuery({
+  //     model: NftModel,
+  //     reqQuery: req.query,
+  //     searchField: ["nftType"],
+  //     extraQuery,
+  //   });
+
+  //   const formattedData = {
+  //     totalNFTs: data[0]?.totalRecords[0]?.count || 0,
+  //     NFTOnSale: data[1]?.totalRecords[0]?.count || 0,
+  //     totalRevenue: data[2]?.list[0]?.totalRevenue || 0,
+  //   };
+
+  //   return res.send([formattedData]);
+  // };
+
+  // nftCount = async (req: Request, res: Response) => {
+  //   info("Inside nft count");
+
+  //   const lookup = this.nftService.lookupService(
+  //     "root_nfts",
+  //     "nftRootId",
+  //     "_id",
+  //     [],
+  //     "totalNFTs"
+  //   )[0];
+  //   const totalNft = []
+  //   const NftOnSale = []
+  //   const totalRevnue = []
+  
+  //   const lookup2 = this.nftService.lookupService(
+  //     "root_nfts",
+  //     "nftRootId",
+  //     "_id",
+  //     [
+  //       {
+  //         $match: {
+  //           nftType: "sold",
+  //         },
+  //       },
+  //     ],
+  //     "NFTOnSale"
+  //   );
+
+  //   const group = this.nftService.groupService(
+  //     { _id: "_id", totalRevenue: { $sum: "$priceInUsd" } }
+  //     //{ $project: { totalRevenue: 1 } }
+  //   );
+
+  //   totalNft.push(lookup)
+  //   NftOnSale.push(lookup2)
+  //   totalRevnue.push(group)
+  //   const pipeline = [lookup, ...lookup2, ...group];
+
+  //   const data = await this.nftService.aggregationQuery(pipeline);
+  //   return res.send(data);
+  // };
+  // nftC = async (req: Request, res: Response) => {
+  //   const { search } = req.query;
+  //   const query = [];
+  //   query.push({
+  //     $facet: {
+  //       totalNFTs: [
+  //         {
+  //           $lookup: {
+  //             localField: "nftRootId",
+  //             foreignField: "_id",
+  //             from: "root_nfts",
+  //             as: "nftDoc",
+  //           },
+  //         },
+  //         {
+  //           $project: {
+  //             totalNFTs: {
+  //               $size: "$nftDoc",
+  //             },
+  //           },
+  //         },
+  //       ],
+  //       NFTOnSale: [
+  //         {
+  //           $lookup: {
+  //             localField: "nftRootId",
+  //             foreignField: "_id",
+  //             from: "root_nfts",
+  //             as: "nftDoc",
+  //             pipeline: [
+  //               {
+  //                 $match: {
+  //                   nftType: "sold",
+  //                 },
+  //               },
+  //             ],
+  //           },
+  //         },
+  //         {
+  //           $project: {
+  //             totalNFTs: {
+  //               $size: "$nftDoc",
+  //             },
+  //           },
+  //         },
+  //       ],
+  //       totalRevenue: [
+  //         {
+  //           $group: {
+  //             _id: "_id",
+  //             totalRevenue: {
+  //               $sum: "$priceInUsd",
+  //             },
+  //           },
+  //         },
+  //       ],
+  //     },
+  //   });
+  //   const data = await this.nftService.aggregationQuery(query);
+  //   return response.helper(
+  //     res,
+  //     true,
+  //     "NFT_DATA",
+  //     data,
+  //     constants.RESPONSE_STATUS.SUCCESS
+  //   );
+  // };
+  // router.get('/nft-count', Permission('nft_management', 'view'), uthilHelper.Wrap(Controller.nftCount))
+  
+  // import { Connection, RequestParams, Callback, Response } from 'jsforce';
+
+// class Apex {
+//   private _conn: Connection;
+
+//   constructor(conn: Connection) {
+//     this._conn = conn;
+//   }
+
+//   private _baseUrl(): string {
+//     return this._conn.instanceUrl + '/services/apexrest';
+//   }
+
+//   private _createRequestParams(
+//     method: string,
+//     path: string,
+//     body: any,
+//     options?: { headers?: any }
+//   ): RequestParams {
+//     const params: RequestParams = {
+//       method,
+//       url: this._baseUrl() + path,
+//     };
+
+//     let _headers: any = {};
+//     if (options && typeof options.headers === 'object') {
+//       _headers = options.headers;
+//     }
+
+//     if (!/^(GET|DELETE)$/i.test(method)) {
+//       _headers['Content-Type'] = 'application/json';
+//     }
+
+//     params.headers = _headers;
+
+//     if (body) {
+//       params.body = JSON.stringify(body);
+//     }
+
+//     return params;
+//   }
+  
+//   get(
+//     path: string,
+//     options?: { headers?: any },
+//     callback?: Callback<any>
+//   ): Promise<Response<any>> {
+//     if (typeof options === 'function') {
+//       callback = options;
+//       options = undefined;
+//     }
+
+//     const params = this._createRequestParams('GET', path, undefined, options);
+//     return this._conn.request(params).thenCall(callback);
+//   }
+
+//   post(
+//     path: string,
+//     body?: any,
+//     options?: { headers?: any },
+//     callback?: Callback<any>
+//   ): Promise<Response<any>> {
+//     if (typeof body === 'function') {
+//       callback = body;
+//       body = undefined;
+//       options = undefined;
+//     }
+
+//     if (typeof options === 'function') {
+//       callback = options;
+//       options = undefined;
+//     }
+
+//     const params = this._createRequestParams('POST', path, body, options);
+//     return this._conn.request(params).thenCall(callback);
+//   }
+
+//   public put(
+//     path: string,
+//     body?: any,
+//     options?: { headers?: any },
+//     callback?: Callback<any>
+//   ): Promise<Response<any>> {
+//     if (typeof body === 'function') {
+//       callback = body;
+//       body = undefined;
+//       options = undefined;
+//     }
+
+//     if (typeof options === 'function') {
+//       callback = options;
+//       options = undefined;
+//     }
+
+//     const params = this._createRequestParams('PUT', path, body, options);
+//     return this._conn.request(params).thenCall(callback);
+//   }
+
+//   patch(
+//     path: string,
+//     body?: any,
+//     options?: { headers?: any },
+//     callback?: Callback<any>
+//   ): Promise<Response<any>> {
+//     if (typeof body === 'function') {
+//       callback = body;
+//       body = undefined;
+//       options = undefined;
+//     }
+
+//     if (typeof options === 'function') {
+//       callback = options;
+//       options = undefined;
+//     }
+
+//     const params = this._createRequestParams('PATCH', path, body, options);
+//     return this._conn.request(params).thenCall(callback);
+//   }
+
+//   del(
+//     path: string,
+//     options?: { headers?: any },
+//     callback?: Callback<any>
+//   ): Promise<Response<any>> {
+//     if (typeof options === 'function') {
+//       callback = options;
+//       options = undefined;
+//     }
+
+//     const params = this._createRequestParams('DELETE', path, undefined, options);
+//     return this._conn.request(params).thenCall(callback);
+//   }
+// }
+
+// /*--------------------------------------------*/
+// /*
+//  * Register hook in connection instantiation for dynamically adding this API module features
+//  */
+// jsforce.on('connection:new', function (conn: { apex: Apex }) {
+//   conn.apex = new Apex(conn);
+// });
+
+// export default Apex;
